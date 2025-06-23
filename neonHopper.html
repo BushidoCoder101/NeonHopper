@@ -291,7 +291,7 @@
             speed: 5,
             velocityY: 0,
             gravity: 0.5,
-            jumpForce: -12,
+            jumpForce: -13, // Increased from -12 to -13 for better jumping
             isJumping: false
         };
         
@@ -415,9 +415,9 @@
             const firstPlatformX = player.x + player.width/2 - platformWidth/2;
             createPlatform(canvasSize.height - 100, firstPlatformX);
             
-            // 2. Create other platforms above with random positions
+            // 2. Create other platforms above with random positions (reduced spacing from 200 to 150)
             for (let i = 1; i < platformCount; i++) {
-                createPlatform(canvasSize.height - 100 - i * 200);
+                createPlatform(canvasSize.height - 100 - i * 150);
             }
             
             // Update UI
@@ -574,15 +574,15 @@
                 }
             }
             
-            // Apply gravity
-            player.velocityY += player.gravity;
-            player.y += player.velocityY;
-            
-            // Check collisions
-            checkCollisions();
-            
-            // Only move platforms after delay
+            // Only apply physics when game is active (after countdown)
             if (!countdownActive) {
+                // Apply gravity
+                player.velocityY += player.gravity;
+                player.y += player.velocityY;
+                
+                // Check collisions
+                checkCollisions();
+                
                 // Move platforms
                 for (let i = platforms.length - 1; i >= 0; i--) {
                     platforms[i].y += gameSpeed;
